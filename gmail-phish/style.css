@@ -1,0 +1,136 @@
+/* Reset and general styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.container {
+  max-width: 380px;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 40px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.logo {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  color: #202124;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #5f6368;
+  margin-bottom: 36px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #185abc;
+}
+
+.button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.forgot-email {
+  color: #1a73e8;
+  text-decoration: none;
+  display: block;
+  margin-top: 16px;
+}
+
+.forgot-email:hover {
+  text-decoration: underline;
+}
+
+.recaptcha-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.additional-links {
+  margin-top: 24px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Align items vertically */
+}
+
+.additional-links a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.additional-links a:hover {
+  text-decoration: underline;
+}
+
+.button {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: auto; /* Align the button to the right */
+}
+
+.button:hover {
+  background-color: #185abc;
+}
+
+.button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}

